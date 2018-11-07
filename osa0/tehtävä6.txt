@@ -1,0 +1,21 @@
+kayttaja->selain:
+note left of selain
+  Kayttaja kirjoittaa uuden muistiinpanon
+  sivulla olevaan tekstikenttään ja painaa
+  Tallenna.
+end note
+
+note left of selain
+  Selaimessa ajattava JavaScript lisää uuden
+  muistiinpanon sivulla olevaan listaan ja
+  lähettää sen myös palvelimelle talletettavaksi.
+end note
+
+selain->palvelin: POST fullstack-exampleapp.herokuapp.com/new_note_spa
+note left of palvelin
+  Palvelin vastaanottaa uuden muistiinpanon
+  luovan pyynnön ja käsittelee sen, tallentaen
+  lisätyn muistiinpanon data.json -tiedoston
+  loppuun muiden muistiinpanojen jatkoksi.
+end note
+palvelin->selain: status 201, uusi muistiinpano tallennettu onnistuneesti

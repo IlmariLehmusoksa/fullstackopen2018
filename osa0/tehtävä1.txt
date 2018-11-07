@@ -1,0 +1,4 @@
+Kävin molemmat tutoriaalit lävitse. Koska omaan jonkin verran taustaa perintei-
+semmästä web-kehityksestä, ei niissä kummassakaan ollut juurikaan uusia asioita.
+Mutta on hyvä aina kerrata, etenkin, kun on kyse asioista, joita ei päivittäin
+tee.

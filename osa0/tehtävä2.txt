@@ -1,0 +1,3 @@
+Samoin kuin tämän osan ensimmäisessä (edellisessä) tehtävässä, html:m lomakkeet
+ovat jo ennestään jokseenkin tuttuja, joten tutoriaalin läpikäyminen oli lähinnä 
+kertausta.
