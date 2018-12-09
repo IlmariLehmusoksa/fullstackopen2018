@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Otsikko = () => {
-  return (
+const Otsikko = () => (
     <h1>anna palautetta</h1>
   )
-}
 
 const Nappula = ({ handleClick, text }) => (
   <button onClick={handleClick}>
@@ -15,12 +13,19 @@ const Nappula = ({ handleClick, text }) => (
 
 const Statistiikka = (props) => {
   let {hyva, neutraali, huono } = props.tila
+  let ka = 0, pos = 0
+  if( hyva + neutraali + huono > 0 ){
+    ka = ((hyva - huono) / (hyva + neutraali + huono)).toFixed(1)
+    pos = (( hyva / (hyva + neutraali + huono) ) * 100 ).toFixed(1)
+  }
   return (
     <div>
       <h2>statistiikka</h2>
       <p>hyvä {hyva} <br />
         neutraali {neutraali}<br />
-        huono {huono}</p>
+        huono {huono}<br />
+        keskiarvo { ka }<br />
+        positiivisia {pos} %</p>
     </div>
   )
 }
