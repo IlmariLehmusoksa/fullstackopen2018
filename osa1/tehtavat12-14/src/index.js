@@ -5,6 +5,23 @@ const Button = ({handler, text}) => (
   <button onClick={handler}>{text}</button>
 )
 
+const Anekdootti = ({anecdote, votes}) => (
+  <div>
+    <p>{anecdotes[anecdote]}</p>
+    <p>has {votes} votes</p>
+  </div>
+)
+
+const Statistics = (props) => {
+  let i = props.state.pisteet.indexOf(Math.max(...props.state.pisteet));
+  return (
+    <div>
+      <h2>anecdote with most votes</h2>
+      <Anekdootti anecdote={i} votes={props.state.pisteet[i]} />
+    </div>
+  )
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -28,12 +45,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <p>{this.props.anecdotes[this.state.selected]}</p>
-        <p>has {this.state.pisteet[this.state.selected]} votes</p>
+        <Anekdootti anecdote={this.state.selected} votes={this.state.pisteet[this.state.selected]} />
         <div>
           <Button handler={this.vote} text="vote" />
           <Button handler={this.randomAnecdote} text="next anecdote" />
         </div>
+        <Statistics state={this.state} />
       </div>
     )
   }
