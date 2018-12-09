@@ -5,27 +5,32 @@ const Otsikko = () => (
     <h1>anna palautetta</h1>
   )
 
-const Nappula = ({ handleClick, text }) => (
+const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>
     {text}
   </button>
 )
 
-const Statistiikka = (props) => {
+const Statistic = ({name, value}) => (
+  <p>{name} {value}</p>
+)
+
+const Statistics = (props) => {
   let {hyva, neutraali, huono } = props.tila
-  let ka = 0, pos = 0
+  let ka = 0, pos = "0%"
   if( hyva + neutraali + huono > 0 ){
     ka = ((hyva - huono) / (hyva + neutraali + huono)).toFixed(1)
     pos = (( hyva / (hyva + neutraali + huono) ) * 100 ).toFixed(1)
+    pos = "" + pos + "%"
   }
   return (
     <div>
       <h2>statistiikka</h2>
-      <p>hyvä {hyva} <br />
-        neutraali {neutraali}<br />
-        huono {huono}<br />
-        keskiarvo { ka }<br />
-        positiivisia {pos} %</p>
+      <Statistic name="hyvä" value={hyva} />
+      <Statistic name="neutraali" value={neutraali} />
+      <Statistic name="huono" value={huono} />
+      <Statistic name="keskiarvo" value={ka} />
+      <Statistic name="positiivisia" value={pos} />
     </div>
   )
 }
@@ -70,11 +75,11 @@ class App extends React.Component {
       <div>
         <Otsikko />
         <div>
-          <Nappula handleClick={this.klikHyva} text="hyvä" />
-          <Nappula handleClick={this.klikNeutraali} text="neutraali" />
-          <Nappula handleClick={this.klikHuono} text="huono" />
+          <Button handleClick={this.klikHyva} text="hyvä" />
+          <Button handleClick={this.klikNeutraali} text="neutraali" />
+          <Button handleClick={this.klikHuono} text="huono" />
         </div>
-        <Statistiikka tila={this.state}/>
+        <Statistics tila={this.state}/>
       </div>
     )
   }
