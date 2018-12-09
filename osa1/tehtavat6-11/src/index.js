@@ -17,22 +17,31 @@ const Statistic = ({name, value}) => (
 
 const Statistics = (props) => {
   let {hyva, neutraali, huono } = props.tila
-  let ka = 0, pos = "0%"
-  if( hyva + neutraali + huono > 0 ){
-    ka = ((hyva - huono) / (hyva + neutraali + huono)).toFixed(1)
-    pos = (( hyva / (hyva + neutraali + huono) ) * 100 ).toFixed(1)
+  let ka = 0, pos = "0%", palautteita = hyva + neutraali + huono
+  if( palautteita > 0 ){
+    ka = ((hyva - huono) / palautteita).toFixed(1)
+    pos = (( hyva / palautteita ) * 100 ).toFixed(1)
     pos = "" + pos + "%"
+
+
+    return (
+      <div>
+        <h2>statistiikka</h2>
+        <Statistic name="hyvä" value={hyva} />
+        <Statistic name="neutraali" value={neutraali} />
+        <Statistic name="huono" value={huono} />
+        <Statistic name="keskiarvo" value={ka} />
+        <Statistic name="positiivisia" value={pos} />
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <h2>statistiikka</h2>
+          <p>ei yhtään palautetta annettu</p>
+        </div>
+    )
   }
-  return (
-    <div>
-      <h2>statistiikka</h2>
-      <Statistic name="hyvä" value={hyva} />
-      <Statistic name="neutraali" value={neutraali} />
-      <Statistic name="huono" value={huono} />
-      <Statistic name="keskiarvo" value={ka} />
-      <Statistic name="positiivisia" value={pos} />
-    </div>
-  )
 }
 
 class App extends React.Component {
