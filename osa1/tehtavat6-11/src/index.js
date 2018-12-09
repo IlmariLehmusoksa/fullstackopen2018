@@ -55,28 +55,12 @@ class App extends React.Component {
 
   }
 
-  klikHyva = () => {
-    this.setState({
-      hyva: this.state.hyva + 1,
-      neutraali: this.state.neutraali,
-      huono: this.state.huono
-    })
-  }
-
-  klikNeutraali = () => {
-    this.setState({
-      hyva: this.state.hyva,
-      neutraali: this.state.neutraali + 1,
-      huono: this.state.huono
-    })
-  }
-
-  klikHuono = () => {
-    this.setState({
-      hyva: this.state.hyva,
-      neutraali: this.state.neutraali,
-      huono: this.state.huono + 1
-    })
+  annaPalautetta = (palaute) => {
+    return () => {
+      let tila = this.state
+      tila[palaute] = tila[palaute] + 1
+      this.setState(tila)
+    }
   }
 
   render() {
@@ -84,9 +68,9 @@ class App extends React.Component {
       <div>
         <Otsikko />
         <div>
-          <Button handleClick={this.klikHyva} text="hyvä" />
-          <Button handleClick={this.klikNeutraali} text="neutraali" />
-          <Button handleClick={this.klikHuono} text="huono" />
+          <Button handleClick={this.annaPalautetta("hyva")} text="hyvä" />
+          <Button handleClick={this.annaPalautetta("neutraali")} text="neutraali" />
+          <Button handleClick={this.annaPalautetta("huono")} text="huono" />
         </div>
         <Statistics tila={this.state}/>
       </div>
