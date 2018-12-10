@@ -1,17 +1,7 @@
 import React from 'react';
-
-const Henkilo = ({person}) => <tr><td>{person.name}</td><td>{person.number}</td></tr>
-
-const Numerot = ({persons, filter}) => {
-  const personsf = persons.filter( person => person.name.toLowerCase().includes( filter.toLowerCase() ))
-  return (
-    <table>
-      <tbody>
-        {personsf.map(person => <Henkilo key={person.id} person={person} />)}
-      </tbody>
-    </table>
-  )
-}
+import Numerot from './components/Numerot'
+import Filtteri from './components/Filtteri'
+import Lisaa from './components/Lisaa'
 
 class App extends React.Component {
   constructor(props) {
@@ -74,26 +64,13 @@ class App extends React.Component {
     return (
       <div>
         <h1>Puhelinluettelo</h1>
-          <div>
-            rajaa näytettäviä: <input value={this.state.filter}
-            onChange={this.handleFilterChange} />
-          </div>
-        <h2>Lisää uusi</h2>
-        <form onSubmit={this.addPerson}>
-          <div>
-            nimi: <input value={this.state.newName}
-            onChange={this.handlePersonChange} />
-          </div>
-          <div>
-            numero: <input value={this.state.newNumber}
-            onChange={this.handleNumberChange} />
-          </div>
-          <div>
-            <button type="submit">lisää</button>
-          </div>
-        </form>
-        <h2>Numerot</h2>
-          <Numerot persons={this.state.persons} filter={this.state.filter} />
+        <Filtteri value={this.state.filter} handler= {this.handleFilterChange} />
+        <Lisaa name={this.state.newName}
+            number={this.state.newNumber}
+            formHandler={this.addPerson}
+            handlerName={this.handlePersonChange}
+            handlerNumber={this.handleNumberChange} />
+        <Numerot persons={this.state.persons} filter={this.state.filter} />
       </div>
     )
   }
