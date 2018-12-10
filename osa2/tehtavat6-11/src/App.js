@@ -1,9 +1,13 @@
 import React from 'react';
 
+const Henkilo = ({person}) => <tr><td>{person.name}</td><td>{person.number}</td></tr>
+
 const Numerot = ({persons}) => (
-  <div>
-    {persons.map(person => <p key={person.id}>{person.name}</p>)}
-  </div>
+  <table>
+    <tbody>
+      {persons.map(person => <Henkilo key={person.id} person={person} />)}
+    </tbody>
+  </table>
 )
 
 class App extends React.Component {
@@ -11,15 +15,21 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { id: 1, name: 'Arto Hellas' }
+        { id: 1, name: 'Arto Hellas', number: '045-1234567' }
       ],
-      newName: ''
+      newName: '',
+      newNumber: ''
     }
   }
 
   handlePersonChange = (event) => {
     //console.log(event.target.value)
     this.setState({ newName: event.target.value })
+  }
+
+  handleNumberChange = (event) => {
+    //console.log(event.target.value)
+    this.setState({ newNumber: event.target.value })
   }
 
   addPerson = (event) => {
@@ -34,6 +44,7 @@ class App extends React.Component {
       // an actual new name
       const personObject = {
         name: this.state.newName,
+        number: this.state.newNumber,
         id: this.state.persons.length + 1
       }
 
@@ -42,7 +53,8 @@ class App extends React.Component {
 
     this.setState({
       persons: persons,
-      newName: ''
+      newName: '',
+      newNumber: ''
     })
   }
 
@@ -54,6 +66,10 @@ class App extends React.Component {
           <div>
             nimi: <input value={this.state.newName}
             onChange={this.handlePersonChange} />
+          </div>
+          <div>
+            numero: <input value={this.state.newNumber}
+            onChange={this.handleNumberChange} />
           </div>
           <div>
             <button type="submit">lisää</button>
