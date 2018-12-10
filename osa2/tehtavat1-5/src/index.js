@@ -11,20 +11,23 @@ const Sisalto = (props) => {
   )
 }
 const Yhteensa = (props) => {
-  const [osa1, osa2, osa3] = props.kurssi.osat
+  let tehtavia = props.kurssi.osat.map( osa => osa.tehtavia)
+  //console.log( tehtavia )
+  let yhteensa = tehtavia.reduce(function(accumulator, currentValue, currentIndex, array) {
+      return accumulator + currentValue;
+    } )
 
   return(
-    <p>yhteensä {osa1.tehtavia + osa2.tehtavia + osa3.tehtavia} tehtävää</p>
+    <p>yhteensä {yhteensa} tehtävää</p>
   )
 }
 
 const Kurssi = (props) => {
-
-
   return (
     <div>
       <Otsikko kurssi={props.kurssi} />
       <Sisalto kurssi={props.kurssi} />
+      <Yhteensa kurssi={props.kurssi} />
     </div>
   )
 }
