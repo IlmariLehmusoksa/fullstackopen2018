@@ -26,12 +26,19 @@ class App extends React.Component {
     event.preventDefault()
     //console.log('nappia painettu')
     //console.log(event.target)
-    const personObject = {
-      name: this.state.newName,
-      id: this.state.persons.length + 1
-    }
+    let persons = null
+    if ( this.state.persons.map(person => person.name ).includes( this.state.newName ) ){
+      // name is already in the list
+      persons = this.state.persons
+    } else {
+      // an actual new name
+      const personObject = {
+        name: this.state.newName,
+        id: this.state.persons.length + 1
+      }
 
-    const persons = this.state.persons.concat(personObject)
+      persons = this.state.persons.concat(personObject)
+    }
 
     this.setState({
       persons: persons,
