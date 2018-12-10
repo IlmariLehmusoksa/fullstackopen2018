@@ -2,23 +2,30 @@ import React from 'react';
 
 const Henkilo = ({person}) => <tr><td>{person.name}</td><td>{person.number}</td></tr>
 
-const Numerot = ({persons}) => (
-  <table>
-    <tbody>
-      {persons.map(person => <Henkilo key={person.id} person={person} />)}
-    </tbody>
-  </table>
-)
+const Numerot = ({persons, filter}) => {
+  const personsf = persons.filter( person => person.name.toLowerCase().includes( filter.toLowerCase() ))
+  return (
+    <table>
+      <tbody>
+        {personsf.map(person => <Henkilo key={person.id} person={person} />)}
+      </tbody>
+    </table>
+  )
+}
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       persons: [
-        { id: 1, name: 'Arto Hellas', number: '045-1234567' }
+        { id: 1, name: 'Arto Hellas', number: '045-1234567' },
+      { id: 2, name: 'Martti Tienari', number: '040-1234568' },
+      { id: 3, name: 'Arto Järvinen', number: '040-1234569' },
+      { id: 4, name: 'Lea Kutvonen', number: '040-1234560' }
       ],
       newName: '',
-      newNumber: ''
+      newNumber: '',
+      filter: ''
     }
   }
 
@@ -30,6 +37,11 @@ class App extends React.Component {
   handleNumberChange = (event) => {
     //console.log(event.target.value)
     this.setState({ newNumber: event.target.value })
+  }
+
+  handleFilterChange = (event) => {
+    //console.log(event.target.value)
+    this.setState({ filter: event.target.value })
   }
 
   addPerson = (event) => {
@@ -61,7 +73,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h2>Puhelinluettelo</h2>
+        <h1>Puhelinluettelo</h1>
+          <div>
+            rajaa näytettäviä: <input value={this.state.filter}
+            onChange={this.handleFilterChange} />
+          </div>
+        <h2>Lisää uusi</h2>
         <form onSubmit={this.addPerson}>
           <div>
             nimi: <input value={this.state.newName}
@@ -76,7 +93,7 @@ class App extends React.Component {
           </div>
         </form>
         <h2>Numerot</h2>
-          <Numerot persons={this.state.persons} />
+          <Numerot persons={this.state.persons} filter={this.state.filter} />
       </div>
     )
   }
