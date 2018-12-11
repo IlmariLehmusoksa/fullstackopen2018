@@ -1,4 +1,7 @@
 import React from 'react';
+
+import axios from 'axios';
+
 import Numerot from './components/Numerot'
 import Filtteri from './components/Filtteri'
 import Lisaa from './components/Lisaa'
@@ -7,16 +10,21 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      persons: [
-        { id: 1, name: 'Arto Hellas', number: '045-1234567' },
-      { id: 2, name: 'Martti Tienari', number: '040-1234568' },
-      { id: 3, name: 'Arto Järvinen', number: '040-1234569' },
-      { id: 4, name: 'Lea Kutvonen', number: '040-1234560' }
-      ],
+      persons: [],
       newName: '',
       newNumber: '',
       filter: ''
     }
+  }
+
+  componentDidMount() {
+    //console.log('did mount')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        //console.log('promise fulfilled')
+        this.setState({ persons: response.data })
+      })
   }
 
   handlePersonChange = (event) => {
