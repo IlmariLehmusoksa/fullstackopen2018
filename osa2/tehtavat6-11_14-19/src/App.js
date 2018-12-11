@@ -5,6 +5,7 @@ import personService from './services/persons'
 import Numerot from './components/Numerot'
 import Filtteri from './components/Filtteri'
 import Lisaa from './components/Lisaa'
+import Notifikaatio from './components/Notifikaatio'
 
 class App extends React.Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class App extends React.Component {
       persons: [],
       newName: '',
       newNumber: '',
-      filter: ''
+      filter: '',
+      stateMessage: null
     }
   }
 
@@ -62,15 +64,17 @@ class App extends React.Component {
           .update(id, personObject)
           .then(response => {
             this.setState({
-              persons: this.state.persons.map(person => person.id !== id ? person : response.data )
+              persons: this.state.persons.map(person => person.id !== id ? person : response.data ),
+              newName: '',
+              newNumber: '',
+              stateMessage: "päivitettiin " + response.data.name
             })
+            setTimeout(() => {
+              this.setState({stateMessage: null})
+              }, 5000)
           })
       }
 
-      this.setState({
-        newName: '',
-        newNumber: ''
-      })
     } else {
       // an actual new name
       const personObject = {
@@ -84,8 +88,12 @@ class App extends React.Component {
           this.setState({
             persons: this.state.persons.concat(response.data),
             newName: '',
-            newNumber: ''
+            newNumber: '',
+            stateMessage: "lisättiin " + response.data.name
           })
+          setTimeout(() => {
+            this.setState({stateMessage: null})
+            }, 5000)
         })
     }
   }
@@ -94,12 +102,18 @@ class App extends React.Component {
     let result = window.confirm(message);
 
     if (result){
+      let name = this.state.persons[parseInt(id) - 1].name
+
       personService
         .del(id)
         .then(response => {
           this.setState({
-            persons: this.state.persons.filter(person => person.id !== id ).map( person => person )
+            persons: this.state.persons.filter(person => person.id !== id ).map( person => person ),
+            stateMessage: "poistettiin " + name
           })
+          setTimeout(() => {
+            this.setState({stateMessage: null})
+            }, 5000)
         })
     }
   }
@@ -108,6 +122,7 @@ class App extends React.Component {
     return (
       <div>
         <h1>Puhelinluettelo</h1>
+        <Notifikaatio message={this.state.stateMessage} />
         <Filtteri value={this.state.filter} handler= {this.handleFilterChange} />
         <Lisaa name={this.state.newName}
             number={this.state.newNumber}
