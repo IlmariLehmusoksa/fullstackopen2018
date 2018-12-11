@@ -48,6 +48,25 @@ class App extends React.Component {
     //console.log(event.target)
     if ( this.state.persons.map(person => person.name ).includes( this.state.newName ) ){
       // name is already in the list
+
+      let result = window.confirm(this.state.newName + " on jo luettelossa, korvataanko puhelinnumero uudella?");
+
+      if (result){
+        const id = this.state.persons.map(person => person.name ).indexOf( this.state.newName ) + 1
+        const personObject = {
+          name: this.state.newName,
+          number: this.state.newNumber
+        }
+
+        personService
+          .update(id, personObject)
+          .then(response => {
+            this.setState({
+              persons: this.state.persons.map(person => person.id !== id ? person : response.data )
+            })
+          })
+      }
+
       this.setState({
         newName: '',
         newNumber: ''
