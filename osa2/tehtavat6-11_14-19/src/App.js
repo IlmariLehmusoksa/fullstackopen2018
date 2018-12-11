@@ -46,26 +46,31 @@ class App extends React.Component {
     event.preventDefault()
     //console.log('nappia painettu')
     //console.log(event.target)
-    let persons = null
     if ( this.state.persons.map(person => person.name ).includes( this.state.newName ) ){
       // name is already in the list
-      persons = this.state.persons
+      this.setState({
+        newName: '',
+        newNumber: ''
+      })
     } else {
       // an actual new name
       const personObject = {
         name: this.state.newName,
-        number: this.state.newNumber,
-        id: this.state.persons.length + 1
+        number: this.state.newNumber
       }
 
-      persons = this.state.persons.concat(personObject)
-    }
-
-    this.setState({
-      persons: persons,
-      newName: '',
-      newNumber: ''
+      axios
+        .post('http://localhost:3001/persons', personObject)
+        .then(response => {
+          this.setState({
+            persons: this.state.persons.concat(response.data),
+            newName: '',
+            newNumber: ''
+      })
     })
+
+
+    }
   }
 
   render() {
