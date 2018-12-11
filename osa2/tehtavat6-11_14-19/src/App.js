@@ -66,10 +66,22 @@ class App extends React.Component {
             persons: this.state.persons.concat(response.data),
             newName: '',
             newNumber: ''
-      })
-    })
+          })
+        })
+    }
+  }
 
+  deletePerson = (id, message) => {
+    let result = window.confirm(message);
 
+    if (result){
+      personService
+        .del(id)
+        .then(response => {
+          this.setState({
+            persons: this.state.persons.filter(person => person.id !== id ).map( person => person )
+          })
+        })
     }
   }
 
@@ -83,7 +95,7 @@ class App extends React.Component {
             formHandler={this.addPerson}
             handlerName={this.handlePersonChange}
             handlerNumber={this.handleNumberChange} />
-        <Numerot persons={this.state.persons} filter={this.state.filter} />
+        <Numerot persons={this.state.persons} filter={this.state.filter} deletePerson={this.deletePerson} />
       </div>
     )
   }
