@@ -73,8 +73,11 @@ class App extends React.Component {
               this.setState({stateMessage: null})
               }, 5000)
           })
+          .catch(error => {
+            alert(`henkilö '${this.state.newName}' on jo valitettavasti poistettu palvelimelta`)
+            this.setState({ persons: this.state.persons.filter(n => n.id !== id) })
+          })
       }
-
     } else {
       // an actual new name
       const personObject = {
@@ -114,6 +117,10 @@ class App extends React.Component {
           setTimeout(() => {
             this.setState({stateMessage: null})
             }, 5000)
+        })
+        .catch(error => {
+          alert(`henkilö '${name}' on jo valitettavasti poistettu palvelimelta`)
+          this.setState({ persons: this.state.persons.filter(n => n.id !== id) })
         })
     }
   }
