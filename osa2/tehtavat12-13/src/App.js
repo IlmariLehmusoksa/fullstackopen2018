@@ -16,9 +16,9 @@ const YksiMaa = ({country}) => (
   </div>
 )
 
-const Maa = ({country}) => <tr><td>{country.name}</td></tr>
+const Maa = ({country, handler}) => <div onClick={handler}>{country.name}</div>
 
-const Maat = ({countries, filter}) => {
+const Maat = ({countries, filter, handler}) => {
   const countriesf = countries.filter( country => country.name.toLowerCase().includes( filter.toLowerCase() ))
 
   if ( countriesf.length === 1 ){
@@ -34,11 +34,7 @@ const Maat = ({countries, filter}) => {
   } else {
   return (
     <div>
-      <table>
-        <tbody>
-          {countriesf.map(country => <Maa key={country.alpha3Code} country={country} />)}
-        </tbody>
-      </table>
+      {countriesf.map(country => <Maa key={country.alpha3Code} country={country} handler={handler} />)}
     </div>
   )}
 }
@@ -67,11 +63,16 @@ class App extends React.Component {
     this.setState({ filter: event.target.value })
   }
 
+  handleClickedCountry = (event) => {
+    //console.log( event )
+    this.setState({ filter: event.target.textContent })
+  }
+
   render() {
     return (
       <div>
         <Filtteri value={this.state.filter} handler= {this.handleFilterChange} />
-        <Maat countries={this.state.countries} filter={this.state.filter} />
+        <Maat countries={this.state.countries} filter={this.state.filter} handler={this.handleClickedCountry}/>
       </div>
     )
   }
